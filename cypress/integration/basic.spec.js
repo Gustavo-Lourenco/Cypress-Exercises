@@ -17,6 +17,11 @@ describe('Cypress basics', () => {
         cy.title()
             .should('be.equal', 'Campo de Treinamento')
             .should('contain', 'Campo')
+
+        cy.title().then(title => {
+            console.log(title)
+        })
+
         //TODO Imprimir o log no console
         //TODO Escrever o título num campo de texto
     })
@@ -27,5 +32,6 @@ describe('Cypress basics', () => {
             .click()
             .should('have.value', 'Obrigado!')
     })
+
 
 })
