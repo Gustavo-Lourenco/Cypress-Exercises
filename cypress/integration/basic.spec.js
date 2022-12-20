@@ -18,12 +18,25 @@ describe('Cypress basics', () => {
             .should('be.equal', 'Campo de Treinamento')
             .should('contain', 'Campo')
 
-        cy.title().then(title => {
+        let syncTitle
+        
+            cy.title().then(title => {
             console.log(title)
+
+            cy.get('#formNome').type(title)
+
+
+            syncTitle = title
         })
 
-        //TODO Imprimir o log no console
-        //TODO Escrever o título num campo de texto
+        cy.get('[data-cy=dataSobrenome]').then($el => {
+            $el.val(syncTitle)
+        })
+
+        cy.get('#elementosForm\\:sugestoes').then($el => {
+            cy.wrap($el).type(syncTitle)
+        })
+
     })
 
     it('Should find and interact with an element', () => {
