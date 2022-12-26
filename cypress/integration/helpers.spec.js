@@ -40,7 +40,7 @@ describe('Helpers ...', () => {
         cy.title().its('length').should('be.equal', 20)
     })
 
-    it.only('Invokee', () => {
+    it.only('Invoke...', () => {
         const getValue = () => 1;
         const soma = (a, b) => a + b;
 
@@ -64,7 +64,7 @@ describe('Helpers ...', () => {
         cy.visit('https://wcaquino.me/cypress/componentes.html')
         cy.get('#formNome').invoke('val', 'Texto via invoke')
         cy.window().invoke('alert', 'Dá pra ver?')
-
+        cy.get('#resultado').invoke('html', '<input type="button"')
     })
 
 })
