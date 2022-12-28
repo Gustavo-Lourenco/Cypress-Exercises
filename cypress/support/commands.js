@@ -45,3 +45,46 @@ Cypress.Commands.add('resetApp', () => {
     cy.get(loc.MENU.SETTING).click()
     cy.get(loc.MENU.RESET).click()
 })
+
+Cypress.Commands.add('getToken', (user, password) => {
+    cy.request({
+        method: 'POST',
+        url: '/signin',
+        body: {
+                email: user,
+                redirecionar: false,
+                senha: password
+        }
+    }).its('body.token').should('not.be.empty')
+    .then(token => {
+        Cypress.env('token', token)
+        return token
+    })
+})
+
+Cypress.Commands.add('resetRest', () => {
+    cy.getToken('gl@gl.com','131294').then(token => {
+        cy.request({
+            method: 'GET',
+            url: '/reset',
+            headers: { Authorization: `JWT ${token}`}
+        }).its('status').should('be.equal', 200)
+    })
+})
+
+Cypress.Commands.add('getContaID', name => {
+    cy.getToken('gl@gl.com','131294').then(token => {
+        cy.request({
+            url: '/contas',
+            method: 'GET',
+            headers: {Authorization: `JWT ${token}`},
+            qs: {
+                nome: `${name}`
+            }
+        })
+    }).then(res => {
+        return res.body[0].id
+    })    
+})
+
+Cypress.Commands.o
